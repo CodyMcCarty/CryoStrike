@@ -5,13 +5,7 @@
 
 #include "Kismet/GameplayStatics.h"
 
-void ACSShooterAIController::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	SetFocus(PlayerPawn);
-	MoveToActor(PlayerPawn, 200);
-}
+
 
 void ACSShooterAIController::BeginPlay()
 {
@@ -19,5 +13,20 @@ void ACSShooterAIController::BeginPlay()
 
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	SetFocus(PlayerPawn);
-	MoveToActor(PlayerPawn, 200);
+}
+
+void ACSShooterAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (LineOfSightTo(PlayerPawn))
+	{
+		SetFocus(PlayerPawn);
+		MoveToActor(PlayerPawn, 200);
+	}
+	else
+	{
+		StopMovement();
+		ClearFocus(EAIFocusPriority::Gameplay);
+	}
 }
