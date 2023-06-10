@@ -3,6 +3,7 @@
 
 #include "CSShooterAIController.h"
 
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -11,9 +12,11 @@ void ACSShooterAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	if(AIBehavior != nullptr)
 	{
 		RunBehaviorTree(AIBehavior);
+		GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
 	}
 }
 
