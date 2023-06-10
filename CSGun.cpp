@@ -31,3 +31,8 @@ void ACSGun::Tick(float DeltaTime)
 
 }
 
+void ACSGun::PullTrigger()
+{
+	UE_LOG(LogTemp, Warning, TEXT("You're shooting"));
+}
+
