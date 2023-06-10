@@ -14,6 +14,9 @@ class CRYOSTRIKE_API ACSShooterAIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+	virtual void Tick(float DeltaSeconds) override;
+
 protected:
 	virtual void BeginPlay() override;
 
