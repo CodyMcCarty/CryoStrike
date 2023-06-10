@@ -3,6 +3,8 @@
 
 #include "CSGun.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ACSGun::ACSGun()
 {
@@ -33,6 +35,6 @@ void ACSGun::Tick(float DeltaTime)
 
 void ACSGun::PullTrigger()
 {
-	UE_LOG(LogTemp, Warning, TEXT("You're shooting"));
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 }
 
