@@ -16,4 +16,7 @@ class CRYOSTRIKE_API UCSBTTask_ClearBlackboardValue : public UBTTask_BlackboardB
 
 public:
 	UCSBTTask_ClearBlackboardValue();
+
+protected:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };
