@@ -37,21 +37,32 @@ void ACSGun::PullTrigger()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 
-	APawn* OwnerP = Cast<APawn>(GetOwner());
-	if (!OwnerP)
+	// Debug shooting from  over shoulder camera
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (!OwnerPawn)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No Owner"));
 		return;
 	}
-	AController* OwnerC = OwnerP->GetController();
-	if (!OwnerC)
+	AController* OwnerController = OwnerPawn->GetController();
+	if (!OwnerController)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No Controller"));
 		return;
 	}
-	FVector L;
-	FRotator Rot;
-	OwnerC->GetPlayerViewPoint(L, Rot);
-	DrawDebugCamera(GetWorld(), L, Rot, 90, 2, FColor::Red, true);
+	FVector Location;
+	FRotator Rotation;
+	OwnerController->GetPlayerViewPoint(Location, Rotation);
+	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
+	FVector End = Location + Rotation.Vector() * 10000;
+	// DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
+	FHitResult HitResult;
+	// DrawDebugLine(GetWorld(), Location, End, FColor::Magenta, true);
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, End, ECC_GameTraceChannel1);
+	UE_LOG(LogTemp, Warning, TEXT("%s"), HitResult.GetActor() ? *HitResult.GetActor()->GetName() : *FString(TEXT("None")));
+	if (bSuccess)
+	{
+		DrawDebugPoint(GetWorld(), HitResult.Location, 20, FColor::Red, true);
+	}
 }
 
