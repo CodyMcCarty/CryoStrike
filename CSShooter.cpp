@@ -22,6 +22,8 @@ void ACSShooter::BeginPlay()
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), PBO_None);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("attach_weapon"));
 	Gun->SetOwner(this);
+
+	HP = MaxHP;
 }
 
 // Called every frame
@@ -42,6 +44,16 @@ void ACSShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("Shoot"), IE_Pressed, this, &ACSShooter::Shoot);
+}
+
+float ACSShooter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	float TakeDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	TakeDamage = FMath::Min(TakeDamage, HP);
+	HP -= TakeDamage;
+	UE_LOG(LogTemp, Warning, TEXT("%f"), HP);
+	return HP;
 }
 
 void ACSShooter::MoveForward(float AxisValue)
