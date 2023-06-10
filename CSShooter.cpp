@@ -19,6 +19,9 @@ void ACSShooter::BeginPlay()
 	Super::BeginPlay();
 
 	Gun = GetWorld()->SpawnActor<ACSGun>(GunClass);
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), PBO_None);
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("attach_weapon"));
+	Gun->SetOwner(this);
 }
 
 // Called every frame
