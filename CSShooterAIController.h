@@ -13,5 +13,10 @@ UCLASS()
 class CRYOSTRIKE_API ACSShooterAIController : public AAIController
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
 	
 };
