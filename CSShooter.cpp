@@ -56,6 +56,11 @@ float ACSShooter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 	return HP;
 }
 
+bool ACSShooter::IsDead() const
+{
+	return HP < 0.01f;
+}
+
 void ACSShooter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);
