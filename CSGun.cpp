@@ -3,6 +3,7 @@
 
 #include "CSGun.h"
 
+#include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -36,7 +37,7 @@ void ACSGun::Tick(float DeltaTime)
 void ACSGun::PullTrigger()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
-
+	
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
 	if (!OwnerPawn)
 	{
@@ -56,14 +57,20 @@ void ACSGun::PullTrigger()
 	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
 	FVector End = Location + Rotation.Vector() * 10000;
 	// DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
-	FHitResult Hit;
 	// DrawDebugLine(GetWorld(), Location, End, FColor::Magenta, true);
+	FHitResult Hit;
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECC_GameTraceChannel1);
 	// UE_LOG(LogTemp, Warning, TEXT("%s"), Hit.GetActor() ? *Hit.GetActor()->GetName() : *FString(TEXT("None")));
 	if (bSuccess)
 	{
 		// DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BulletImpact, Hit.Location, Rotation.GetInverse());
+		if (Hit.GetActor())
+		{
+		FPointDamageEvent DamageEvent(Damage, Hit, -Rotation.Vector(), nullptr);
+			Hit.GetActor()->TakeDamage(Damage, DamageEvent, OwnerController, this);
+		}
+		
 	}
 }
 

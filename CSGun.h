@@ -37,4 +37,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* BulletImpact;
+
+	UPROPERTY(EditAnywhere)
+	float Damage{10.f};
 };
