@@ -37,7 +37,6 @@ void ACSGun::PullTrigger()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 
-	// Debug shooting from  over shoulder camera
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
 	if (!OwnerPawn)
 	{
@@ -53,16 +52,18 @@ void ACSGun::PullTrigger()
 	FVector Location;
 	FRotator Rotation;
 	OwnerController->GetPlayerViewPoint(Location, Rotation);
+	// Debug shooting from over shoulder camera.  Left in for future reference
 	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
 	FVector End = Location + Rotation.Vector() * 10000;
 	// DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
-	FHitResult HitResult;
+	FHitResult Hit;
 	// DrawDebugLine(GetWorld(), Location, End, FColor::Magenta, true);
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, End, ECC_GameTraceChannel1);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), HitResult.GetActor() ? *HitResult.GetActor()->GetName() : *FString(TEXT("None")));
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECC_GameTraceChannel1);
+	// UE_LOG(LogTemp, Warning, TEXT("%s"), Hit.GetActor() ? *Hit.GetActor()->GetName() : *FString(TEXT("None")));
 	if (bSuccess)
 	{
-		DrawDebugPoint(GetWorld(), HitResult.Location, 20, FColor::Red, true);
+		// DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BulletImpact, Hit.Location, Rotation.GetInverse());
 	}
 }
 
