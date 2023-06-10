@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "CSShooter.generated.h"
 
+class ACSGun;
+
 UCLASS()
 class CRYOSTRIKE_API ACSShooter : public ACharacter
 {
@@ -29,4 +31,10 @@ public:
 private:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ACSGun> GunClass;
+
+	UPROPERTY()
+	ACSGun* Gun;
 };

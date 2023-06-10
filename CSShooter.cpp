@@ -3,6 +3,8 @@
 
 #include "CSShooter.h"
 
+#include "CSGun.h"
+
 // Sets default values
 ACSShooter::ACSShooter()
 {
@@ -15,7 +17,8 @@ ACSShooter::ACSShooter()
 void ACSShooter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Gun = GetWorld()->SpawnActor<ACSGun>(GunClass);
 }
 
 // Called every frame
