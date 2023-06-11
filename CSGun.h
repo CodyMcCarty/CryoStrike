@@ -10,8 +10,8 @@ UCLASS()
 class CRYOSTRIKE_API ACSGun : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ACSGun();
 
@@ -19,13 +19,17 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void PullTrigger();
 
 private:
+	bool GunTrace(FHitResult& Hit, FRotator& Rotation);
+
+	AController* GetOwnerController() const;
+
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
 
