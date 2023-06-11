@@ -34,6 +34,8 @@ void ACSGun::Tick(float DeltaTime)
 
 }
 
+
+
 void ACSGun::PullTrigger()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
@@ -58,8 +60,13 @@ void ACSGun::PullTrigger()
 	FVector End = Location + Rotation.Vector() * 10000;
 	// DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
 	// DrawDebugLine(GetWorld(), Location, End, FColor::Magenta, true);
+	
+	FCollisionQueryParams CollisionQueryParams;
+	CollisionQueryParams.AddIgnoredActor(this);
+	CollisionQueryParams.AddIgnoredActor(OwnerPawn);
 	FHitResult Hit;
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECC_GameTraceChannel1);
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECC_GameTraceChannel1, CollisionQueryParams);
+	
 	// UE_LOG(LogTemp, Warning, TEXT("%s"), Hit.GetActor() ? *Hit.GetActor()->GetName() : *FString(TEXT("None")));
 	if (bSuccess)
 	{
