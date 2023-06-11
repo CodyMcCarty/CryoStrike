@@ -35,12 +35,14 @@ void ACSGun::Tick(float DeltaTime)
 void ACSGun::PullTrigger()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
+	UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("MuzzleFlashSocket"));
 	
 	FHitResult Hit;
 	FRotator Rotation;
 	if (GunTrace(Hit, Rotation))
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BulletImpact, Hit.Location, Rotation.GetInverse());
+		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), BulletImpactSfx, Hit.Location);
 		if (AActor* HitActor = Hit.GetActor())
 		{
 			AController* OwnerController = GetOwnerController();
@@ -55,11 +57,12 @@ bool ACSGun::GunTrace(FHitResult& Hit, FRotator& Rotation)
 {
 	AController* OwnerController = GetOwnerController();
 	if (!OwnerController) return false;
+
+	// Debug shooting from over shoulder camera.  Left in intentionally
 	
 	FVector Location;
 	OwnerController->GetPlayerViewPoint(Location, Rotation);
 	// FVector ShotDirection = -Rotation.Vector()
-	// Debug shooting from over shoulder camera.  Left in for future reference
 	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
 	FVector End = Location + Rotation.Vector() * 10000;
 	// DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);

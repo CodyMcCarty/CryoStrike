@@ -40,7 +40,13 @@ private:
 	UParticleSystem* MuzzleFlash;
 
 	UPROPERTY(EditAnywhere)
+	USoundBase* MuzzleSound;
+
+	UPROPERTY(EditAnywhere)
 	UParticleSystem* BulletImpact;
+	
+	UPROPERTY(EditAnywhere)
+	USoundBase* BulletImpactSfx;
 
 	UPROPERTY(EditAnywhere)
 	float Damage{10.f};
