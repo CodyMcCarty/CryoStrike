@@ -42,7 +42,7 @@ void ACSGun::PullTrigger()
 	if (GunTrace(Hit, Rotation))
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BulletImpact, Hit.Location, Rotation.GetInverse());
-		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), BulletImpactSfx, Hit.Location);
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), BulletImpactSfx, Hit.Location);
 		if (AActor* HitActor = Hit.GetActor())
 		{
 			AController* OwnerController = GetOwnerController();
