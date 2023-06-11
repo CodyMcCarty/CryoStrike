@@ -33,18 +33,18 @@ void ACSShooterAIController::BeginPlay()
 void ACSShooterAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	if (LineOfSightTo(PlayerPawn))
-	{
-	// 	SetFocus(PlayerPawn);
-	// 	MoveToActor(PlayerPawn, 200);  LastKnownPlayerLocation
-		GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
-		GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), PlayerPawn->GetActorLocation());
-	}
-	else
-	{
-	// 	StopMovement();
-	// 	ClearFocus(EAIFocusPriority::Gameplay);
-		GetBlackboardComponent()->ClearValue(TEXT("PlayerLocation"));
-	}
+	// APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); // Now updated in BTServices
+	// if (LineOfSightTo(PlayerPawn))
+	// {
+	// // 	SetFocus(PlayerPawn);
+	// // 	MoveToActor(PlayerPawn, 200);  LastKnownPlayerLocation
+	// 	// GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
+	// 	// GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), PlayerPawn->GetActorLocation()); 
+	// }
+	// else
+	// {
+	// // 	StopMovement();
+	// // 	ClearFocus(EAIFocusPriority::Gameplay);
+	// 	// GetBlackboardComponent()->ClearValue(TEXT("PlayerLocation"));
+	// }
 }
