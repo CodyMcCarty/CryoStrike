@@ -3,6 +3,7 @@
 
 #include "CSShooter.h"
 
+#include "CryoStrikeGameModeBase.h"
 #include "CSGun.h"
 #include "Components/CapsuleComponent.h"
 
@@ -59,6 +60,10 @@ float ACSShooter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 	{
 		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		if (ACryoStrikeGameModeBase* CSGameMode = GetWorld()->GetAuthGameMode<ACryoStrikeGameModeBase>(); CSGameMode != nullptr)
+		{
+			CSGameMode->PawnKilled(this);
+		}
 	}
 	
 	return HP;
