@@ -5,6 +5,7 @@
 
 #include "CryoStrikeGameModeBase.h"
 #include "CSGun.h"
+#include "CSPlayerController.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -26,6 +27,11 @@ void ACSShooter::BeginPlay()
 	Gun->SetOwner(this);
 
 	HP = MaxHP;
+	// TODO: remove debug extra HP
+	if (Cast<ACSPlayerController>(GetController()))
+	{
+		HP = 10000;
+	}
 }
 
 // Called every frame

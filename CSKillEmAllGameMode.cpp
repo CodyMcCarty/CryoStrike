@@ -23,12 +23,9 @@ void ACSKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 
 	for (ACSShooterAIController* AIController : TActorRange<ACSShooterAIController>(GetWorld()))
 	{
-		if (AIController && !AIController->IsDead())
-		{
-			return;
-		}
-		EndGame(true); // all AIs are dead
+		if (!AIController->IsDead()) return;
 	}
+	EndGame(true); // all AIs are dead
 }
 
 void ACSKillEmAllGameMode::EndGame(bool bIsPlayerWinner)
