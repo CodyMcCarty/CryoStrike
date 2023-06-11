@@ -63,7 +63,6 @@ float ACSShooter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 		}
 		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
 	}
 	
 	return HP;

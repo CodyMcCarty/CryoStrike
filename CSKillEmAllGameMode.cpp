@@ -4,6 +4,8 @@
 #include "CSKillEmAllGameMode.h"
 
 #include "CSPlayerController.h"
+#include "EngineUtils.h"
+#include "Kismet/GameplayStatics.h"
 
 void ACSKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 {
@@ -14,8 +16,17 @@ void ACSKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 		APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
 		if (PlayerController != nullptr)
 		{
-			PlayerController->GameHasEnded(nullptr, false);
+			EndGame(false);
 		}
 	}
 	
+}
+
+void ACSKillEmAllGameMode::EndGame(bool bIsPlayerWinner)
+{
+	for (AController* Controller : TActorRange<AController>(GetWorld()))
+	{
+		bool bIsWinner = Controller->IsPlayerController() == bIsPlayerWinner;
+		Controller->GameHasEnded(Controller->GetPawn(), bIsWinner);
+	}
 }
