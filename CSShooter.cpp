@@ -30,7 +30,7 @@ void ACSShooter::BeginPlay()
 	// TODO: remove debug extra HP
 	if (Cast<ACSPlayerController>(GetController()))
 	{
-		HP = 10000;
+		// HP = 10000;
 	}
 }
 

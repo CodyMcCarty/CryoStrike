@@ -19,11 +19,20 @@ class CRYOSTRIKE_API ACSPlayerController : public APlayerController
 public:
 	virtual void GameHasEnded(AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(EditAnywhere)
 	float RestartDelay{5.f};
 
 	FTimerHandle RestartTimer;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> HUDClass;
+
+	UPROPERTY()
+	UUserWidget* HUD;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> LoseScreenClass;

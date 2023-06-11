@@ -5,25 +5,38 @@
 
 #include "Blueprint/UserWidget.h"
 
+void ACSPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// TODO: find best practices/coding standard for UE conditional init-statements and != nullptr
+	HUD = CreateWidget(this, HUDClass);
+	if (HUD != nullptr)
+	{
+		HUD->AddToViewport();
+	}
+}
+
 void ACSPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner)
 {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
 
+	HUD->RemoveFromParent();
 	if (bIsWinner)
 	{
-		UUserWidget* WinWidget = CreateWidget(this, WinScreenClass);
-		if (WinWidget != nullptr)
+		if (UUserWidget* WinWidget = CreateWidget(this, WinScreenClass))
 		{
 			WinWidget->AddToViewport();
 		}
 	}
 	else
 	{
-		UUserWidget* LoseWidget = CreateWidget(this, LoseScreenClass);
-		if (LoseWidget != nullptr)
+		if (UUserWidget* LoseWidget = CreateWidget(this, LoseScreenClass); LoseWidget != nullptr)
 		{
 			LoseWidget->AddToViewport();
 		}
 	}
 	GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }
+
+
