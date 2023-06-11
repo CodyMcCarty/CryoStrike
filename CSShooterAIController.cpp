@@ -3,6 +3,7 @@
 
 #include "CSShooterAIController.h"
 
+#include "CSShooter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -28,6 +29,16 @@ void ACSShooterAIController::BeginPlay()
 		GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), PlayerPawn->GetActorLocation());
 		GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
 	}
+}
+
+bool ACSShooterAIController::IsDead() const
+{
+	ACSShooter* Shooter = Cast<ACSShooter>(GetPawn());
+	if (Shooter != nullptr)
+	{
+		return Shooter->IsDead(); 
+	}
+	return true;
 }
 
 void ACSShooterAIController::Tick(float DeltaSeconds)

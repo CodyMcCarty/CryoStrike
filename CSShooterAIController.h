@@ -20,6 +20,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+public:
+	bool IsDead() const;
+
 private:
 	UPROPERTY(EditAnywhere)
 	UBehaviorTree* AIBehavior;

@@ -9,11 +9,21 @@ void ACSPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner)
 {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
 
-	GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
-
-	UUserWidget* LoseWidget = CreateWidget(this, LoseScreenClass);
-	if (LoseWidget != nullptr)
+	if (bIsWinner)
 	{
-		LoseWidget->AddToViewport();
+		UUserWidget* WinWidget = CreateWidget(this, WinScreenClass);
+		if (WinWidget != nullptr)
+		{
+			WinWidget->AddToViewport();
+		}
 	}
+	else
+	{
+		UUserWidget* LoseWidget = CreateWidget(this, LoseScreenClass);
+		if (LoseWidget != nullptr)
+		{
+			LoseWidget->AddToViewport();
+		}
+	}
+	GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }

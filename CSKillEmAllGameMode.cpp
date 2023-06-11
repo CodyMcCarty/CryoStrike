@@ -3,7 +3,10 @@
 
 #include "CSKillEmAllGameMode.h"
 
+#include "AIController.h"
 #include "CSPlayerController.h"
+#include "CSShooter.h"
+#include "CSShooterAIController.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -11,15 +14,25 @@ void ACSKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 {
 	Super::PawnKilled(PawnKilled);
 
-	if (PawnKilled != nullptr)
+	APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
+	if (PlayerController != nullptr)
 	{
-		APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
-		if (PlayerController != nullptr)
-		{
-			EndGame(false);
-		}
+		// Must be the player's controller that died
+		EndGame(false);
 	}
-	
+
+	auto DbgAIs = TActorRange<ACSShooterAIController>(GetWorld());
+
+	for (ACSShooterAIController* AIController : TActorRange<ACSShooterAIController>(GetWorld()))
+	{
+		APawn* dbgPawn = AIController->GetPawn();
+		bool dbgPawnIsDead = AIController->IsDead();
+		if (AIController && !AIController->IsDead())
+		{
+			return;
+		}
+		EndGame(true); // all AIs are dead
+	}
 }
 
 void ACSKillEmAllGameMode::EndGame(bool bIsPlayerWinner)
