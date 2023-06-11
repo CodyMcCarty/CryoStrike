@@ -4,6 +4,7 @@
 #include "CSShooter.h"
 
 #include "CSGun.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ACSShooter::ACSShooter()
@@ -53,6 +54,13 @@ float ACSShooter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 	TakeDamage = FMath::Min(TakeDamage, HP);
 	HP -= TakeDamage;
 	UE_LOG(LogTemp, Warning, TEXT("%f"), HP);
+
+	if (IsDead())
+	{
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	
 	return HP;
 }
 

@@ -17,7 +17,7 @@ void ACSShooterAIController::BeginPlay()
 	{
 		if (UCharacterMovementComponent* MovementComponent = ControlledPawn->FindComponentByClass<UCharacterMovementComponent>())
 		{
-			MovementComponent->MaxWalkSpeed = 300;
+			MovementComponent->MaxWalkSpeed = 500;
 		}
 	}
 
