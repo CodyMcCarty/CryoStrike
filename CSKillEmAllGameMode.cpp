@@ -3,13 +3,19 @@
 
 #include "CSKillEmAllGameMode.h"
 
+#include "CSPlayerController.h"
+
 void ACSKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 {
 	Super::PawnKilled(PawnKilled);
 
 	if (PawnKilled != nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *PawnKilled->GetName());
+		APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
+		if (PlayerController != nullptr)
+		{
+			PlayerController->GameHasEnded(nullptr, false);
+		}
 	}
 	
 }

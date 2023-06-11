@@ -54,16 +54,16 @@ float ACSShooter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 	float TakeDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	TakeDamage = FMath::Min(TakeDamage, HP);
 	HP -= TakeDamage;
-	UE_LOG(LogTemp, Warning, TEXT("%f"), HP);
 
 	if (IsDead())
 	{
-		DetachFromControllerPendingDestroy();
-		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		if (ACryoStrikeGameModeBase* CSGameMode = GetWorld()->GetAuthGameMode<ACryoStrikeGameModeBase>(); CSGameMode != nullptr)
 		{
 			CSGameMode->PawnKilled(this);
 		}
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 	}
 	
 	return HP;
