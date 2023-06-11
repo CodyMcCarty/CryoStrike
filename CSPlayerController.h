@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "CSPlayerController.generated.h"
 
+class UUserWidget;
+
 /**
  * 
  */
@@ -22,5 +24,8 @@ private:
 	float RestartDelay{5.f};
 
 	FTimerHandle RestartTimer;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> LoseScreenClass;
 	
 };
