@@ -21,12 +21,8 @@ void ACSKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 		EndGame(false);
 	}
 
-	auto DbgAIs = TActorRange<ACSShooterAIController>(GetWorld());
-
 	for (ACSShooterAIController* AIController : TActorRange<ACSShooterAIController>(GetWorld()))
 	{
-		APawn* dbgPawn = AIController->GetPawn();
-		bool dbgPawnIsDead = AIController->IsDead();
 		if (AIController && !AIController->IsDead())
 		{
 			return;
