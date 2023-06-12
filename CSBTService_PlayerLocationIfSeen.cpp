@@ -26,7 +26,7 @@ void UCSBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerCo
 	
 	if (AIController->LineOfSightTo(Player))
 	{
-		BBComponent->SetValueAsVector(GetSelectedBlackboardKey(), Player->GetActorLocation());
+		BBComponent->SetValueAsObject(GetSelectedBlackboardKey(), Player);
 	}
 	else
 	{
