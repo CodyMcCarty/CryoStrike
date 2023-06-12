@@ -32,6 +32,9 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
+
+	UFUNCTION(BlueprintPure)
+	float GetHPPercent() const;
 	
 	void Shoot();
 

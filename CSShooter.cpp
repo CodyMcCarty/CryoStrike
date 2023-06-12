@@ -79,6 +79,11 @@ bool ACSShooter::IsDead() const
 	return HP < 0.01f;
 }
 
+float ACSShooter::GetHPPercent() const
+{
+	return HP / MaxHP;
+}
+
 void ACSShooter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);
